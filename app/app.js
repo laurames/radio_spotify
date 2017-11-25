@@ -27,7 +27,8 @@ var client_secret = 'f9da10c0119a4145abeb3e5fc06b8265'; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 
 var headers = {
-  'Authorization': 'Bearer BQBIQvS_PK9L9ON24LLeHZPX9OT6YmQVnGhuJcRv7QjQ8QGND3v0-2nQ5NUthmLM0seK1ySrfsjOt7PrBObnVqrugKcURakQx4Gws6zKP3p3Klg_3zT_hZWEn5tdMEzO64_-w2oGbB6cwSk7FmWiwjpIUj_tGEpRPW0zQvOxTHxkkGqcC962ptR4SjR8t0GOWtUvTU22lezBCCCMhtEHdUrcXlzmkas_QgSX9eZUkMtCeST8l_ht_VvzZeXGACQlBWMjMITf7Nj08Ns'
+  'Authorization': 'Bearer BQD4i6nAWx4b-kTEx_Jl7LlHPpjOLW54BUfLrxmNb1wwHp93oZ2hTbTefSng_5VVu9K9ZCWE3UR4tLqtG1x0RfExnyOR1NC74xfEQ9Zuztn20HzNSzULXGDKKWW8X66aXJALOczX9Irc0D-_tyii27OiiALt_7TiU5Ch0LRc_dqsrEcgFmdgX3qnuSpKfWl2lPui1A3g_XdlY55bP1TPw1nA3sxFVv26XaJyfGQGQbMg6ljNEtufamYXW1e-grbdrGilC9Gl4CnYXVA',
+  "Content-Type" : "application/json"
 }
 
 // Configure the request
@@ -36,6 +37,10 @@ var optionsPlaylists = {
     method: 'GET',
     headers: headers
 }
+
+var positionBody = JSON.stringify({
+  position: 1
+});
 
 var myArray = {
   "1": "Release Radar",
@@ -55,26 +60,24 @@ function callSpotify(error, response, body) {
           // console.log(myArray);
           if (response.items[i].name === myArray[arrayId]) {
             var playlist = response.items[i];
-            console.log(playlist);
-            console.log("KKKKKK");
 
-            console.log(playlist.id);
-            console.log(playlist.external_urls);
+            var obj = { "context_uri":"spotify:user:spotify:playlist:" + playlist.id,
+            "offset": {"position": 5}};
+            var putBody = JSON.stringify(obj);
 
-            var external_urls = playlists.external_urls;
+            console.log(playlist.name);
 
             var optionsJustOnePlaylist = {
-                url: '	https://api.spotify.com/v1/me/player/play',
-                method: 'GET',
-                body:    "context_uri=spotify:user:spotify:playlist:37i9dQZEVXcE8HrDROGOx6",
-                headers: headers
+                url: 'https://api.spotify.com/v1/me/player/play',
+                method: 'PUT',
+                headers: headers,
+                qs: {'device_id	': '219af98b3ee567d489a64b5b0c66bd9dce51fc0e'}
             }
 
-            request(optionsJustOnePlaylist, function() {
-              console.log("sucess")
-            })
-
-            // request()
+            request(optionsJustOnePlaylist, function(error, response, body) {
+              console.log("sucess");
+              console.log(putBody);
+            }).end(putBody);
           }
         }
     }
