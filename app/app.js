@@ -6,7 +6,17 @@
  * For more information, read
  * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
  */
+// var jsdom = require('jQuery');
+// var jsdom = require("jsdom");
+// var window = jsdom.jsdom().parentWindow;
+//
+// jsdom.jQueryify(window, "http://code.jquery.com/jquery-2.1.3.min.js", function () {
+//   var $ = window.$;
+//   $("body").prepend("<h1>The title</h1>");
+//   console.log($("h1").html());
+// });
 
+var request = require('request');
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var querystring = require('querystring');
@@ -15,6 +25,44 @@ var cookieParser = require('cookie-parser');
 var client_id = 'f350b06e1ffc46cca3c34fc86c5ec9c7'; // Your client id
 var client_secret = 'f9da10c0119a4145abeb3e5fc06b8265'; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
+
+var headers = {
+  'Authorization': 'Bearer BQAvsbQWsNpc9p8ofOjRg_4N-HLZstF8larVX1FBGWL9zUBqfzHOCufuMZuqLKXOFYuDdg-zf5WAeZL0jm2JdYM1CyFnTbZJvxT6gfUBNhUxoN9panFIeQKR3hXNnIPCwjfYGhzysb8_IJENuqd7CDBT-TguYI-PgcC0XMcxTTsWqqQ2gj8ePQg_Njk65SWjTeg5u7cioyNPNUX6xkkoC7vnfZLvnRymTY-yxNMDvViZgwPTQ0sINtyTZKsJnhvkOPhJus3i_n850bY'
+}
+
+// Configure the request
+var options = {
+    url: 'https://api.spotify.com/v1/users/kuznetsova.vv/playlists',
+    method: 'GET',
+    headers: headers
+}
+
+var myArray = {
+  "1": "Release Radar",
+  "2": "Discover Weekly",
+};
+
+var arrayId = 2;
+
+function callSpotify(error, response, body) {
+    if (!error && response.statusCode == 200) {
+        // Print out the response body
+        //console.log(body)
+        console.log("Here I start");
+        console.log(arrayId);
+        var response = JSON.parse(body);
+        for (i = 0; i < response.items.length; i++ ) {
+          // console.log(myArray);
+          if (response.items[i].name === myArray[arrayId]) {
+            var playlist = response.items[i];
+            console.log(playlist);
+            console.log("AAAAAAAAAAA");
+          }
+        }
+    }
+}
+// Start the request
+request(options, callSpotify);
 
 
 var SerialPort = require('serialport');
@@ -30,6 +78,10 @@ var SerialPort = require('serialport');
   var currentPlaylist;
   var currentVolume;
   var playlists = 4; //Victoria we need your code for this. This changed with how many playlists we get from spotify.
+
+/////
+
+  // require('./car.js').getPlaylists('hello');
 
   port.on('data', (data) => {
     /* get a buffer of data from the serial port */
@@ -179,9 +231,3 @@ app.get('/refresh_token', function(req, res) {
 
 console.log('Listening on 8888');
 app.listen(8888);
-
-/////h
-///asdfasdf/////asdfasdasdf
-///////asdfasdfasdasdfasdfasdfasdfasff
-
-/////pppppppasdsdfasdffasdfaasdfasdfasdfasdasdfasf fasdfasf

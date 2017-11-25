@@ -118,3 +118,8 @@ function setHeader(xhr) {
 
  xhr.setRequestHeader('Authorization', 'Bearer ' + actualToken);
 }
+
+
+// var test = function() {
+//   console.log("Hello wold");
+// }
