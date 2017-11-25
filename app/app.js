@@ -29,6 +29,7 @@ var SerialPort = require('serialport');
 
   var currentPlaylist;
   var currentVolume;
+  var playlists = 4; //Victoria we need your code for this. This changed with how many playlists we get from spotify.
 
   port.on('data', (data) => {
     /* get a buffer of data from the serial port */
@@ -36,6 +37,7 @@ var SerialPort = require('serialport');
 
     if((data.toString() > 0) && (data.toString()<1000)){
       currentPlaylist = data.toString();
+      currentPlaylist = ((currentPlaylist - 0) / (1000 - 0) * (playlists - 1) + 1);
     } else {
       currentVolume = data.toString();
       currentVolume = parseInt((currentVolume-1000)/10);
