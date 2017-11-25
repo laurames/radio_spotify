@@ -1,4 +1,4 @@
-Harware radio that works with the spotify [web api](https://developer.spotify.com/web-api/)
+Hardware radio that works with the spotify [web api](https://developer.spotify.com/web-api/)
 
 ## Installation
 
