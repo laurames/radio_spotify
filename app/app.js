@@ -27,11 +27,11 @@ var client_secret = 'f9da10c0119a4145abeb3e5fc06b8265'; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 
 var headers = {
-  'Authorization': 'Bearer BQAvsbQWsNpc9p8ofOjRg_4N-HLZstF8larVX1FBGWL9zUBqfzHOCufuMZuqLKXOFYuDdg-zf5WAeZL0jm2JdYM1CyFnTbZJvxT6gfUBNhUxoN9panFIeQKR3hXNnIPCwjfYGhzysb8_IJENuqd7CDBT-TguYI-PgcC0XMcxTTsWqqQ2gj8ePQg_Njk65SWjTeg5u7cioyNPNUX6xkkoC7vnfZLvnRymTY-yxNMDvViZgwPTQ0sINtyTZKsJnhvkOPhJus3i_n850bY'
+  'Authorization': 'Bearer BQBIQvS_PK9L9ON24LLeHZPX9OT6YmQVnGhuJcRv7QjQ8QGND3v0-2nQ5NUthmLM0seK1ySrfsjOt7PrBObnVqrugKcURakQx4Gws6zKP3p3Klg_3zT_hZWEn5tdMEzO64_-w2oGbB6cwSk7FmWiwjpIUj_tGEpRPW0zQvOxTHxkkGqcC962ptR4SjR8t0GOWtUvTU22lezBCCCMhtEHdUrcXlzmkas_QgSX9eZUkMtCeST8l_ht_VvzZeXGACQlBWMjMITf7Nj08Ns'
 }
 
 // Configure the request
-var options = {
+var optionsPlaylists = {
     url: 'https://api.spotify.com/v1/users/kuznetsova.vv/playlists',
     method: 'GET',
     headers: headers
@@ -56,13 +56,31 @@ function callSpotify(error, response, body) {
           if (response.items[i].name === myArray[arrayId]) {
             var playlist = response.items[i];
             console.log(playlist);
-            console.log("AAAAAAAAAAA");
+            console.log("KKKKKK");
+
+            console.log(playlist.id);
+            console.log(playlist.external_urls);
+
+            var external_urls = playlists.external_urls;
+
+            var optionsJustOnePlaylist = {
+                url: '	https://api.spotify.com/v1/me/player/play',
+                method: 'GET',
+                body:    "context_uri=spotify:user:spotify:playlist:37i9dQZEVXcE8HrDROGOx6",
+                headers: headers
+            }
+
+            request(optionsJustOnePlaylist, function() {
+              console.log("sucess")
+            })
+
+            // request()
           }
         }
     }
 }
 // Start the request
-request(options, callSpotify);
+request(optionsPlaylists, callSpotify);
 
 
 var SerialPort = require('serialport');
@@ -78,10 +96,6 @@ var SerialPort = require('serialport');
   var currentPlaylist;
   var currentVolume;
   var playlists = 4; //Victoria we need your code for this. This changed with how many playlists we get from spotify.
-
-/////
-
-  // require('./car.js').getPlaylists('hello');
 
   port.on('data', (data) => {
     /* get a buffer of data from the serial port */
