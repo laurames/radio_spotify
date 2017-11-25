@@ -37,6 +37,7 @@ var SerialPort = require('serialport');
 
     if((data.toString() > 0) && (data.toString()<1000)){
       currentPlaylist = data.toString();
+      getPlaylists(currentPlaylist);
       currentPlaylist = parseInt(((currentPlaylist - 0) / (1000 - 0) * (playlists + 1 - 1) + 1));
     } else if ((data.toString()>1001) && (data.toString()<2000)) {
       currentVolume = data.toString();

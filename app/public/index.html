@@ -18,7 +18,7 @@
 
   <body>
     <div class="container">
-      <button onclick="getPlaylists()">Try It</button>
+      <button onclick="getPlaylists('1')">Try It</button>
 
       <div id="login">
         <h1>This is an example of the Authorization Code flow</h1>
@@ -67,6 +67,7 @@
     <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="js/main.js"></script>
 
+<!--
     <script>
       function getPlaylists() {
         console.log("Muhis muhis");
@@ -85,9 +86,15 @@
             for (i = 0; i < data.items.length; i++ ) {
               console.log(data.items[i]);
               var playlist = data.items[i];
-              console.log("==========================================");
-              console.log("==========================================");
-              console.log(playlist.name);
+
+              if (playlist.name === "Release Radar") {
+
+
+                console.log("==========================================");
+                console.log("==========================================");
+
+                console.log(playlist.name);
+              }
             }
           },
           error: function() { alert('boo!'); },
@@ -106,5 +113,6 @@
        xhr.setRequestHeader('Authorization', 'Bearer ' + actualToken);
      }
     </script>
+  -->
   </body>
 </html>
