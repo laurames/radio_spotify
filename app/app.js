@@ -15,10 +15,23 @@ var cookieParser = require('cookie-parser');
 var client_id = 'f350b06e1ffc46cca3c34fc86c5ec9c7'; // Your client id
 var client_secret = 'f9da10c0119a4145abeb3e5fc06b8265'; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
+
+
 var SerialPort = require('serialport');
-var port = new SerialPort('/dev/cu.usbmodem2462301', {
-  baudRate: 57600
-});
+
+  var port = new SerialPort('/dev/cu.usbmodem2462301', {
+    baudRate: 57600
+  });
+
+  port.on('open', () => {
+    console.log('Port Opened');
+  });
+
+  port.on('data', (data) => {
+    /* get a buffer of data from the serial port */
+    console.log(data.toString());
+  });
+
 
 /**
  * Generates a random string containing numbers and letters

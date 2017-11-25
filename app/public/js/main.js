@@ -28,11 +28,6 @@
       refresh_token = params.refresh_token,
       error = params.error;
 
-  // Switches the port into "flowing mode"
-  port.on('data', function (data) {
-    console.log('Data:', data);
-  });
-
   if (error) {
     alert('There was an error during the authentication');
   } else {
