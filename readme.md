@@ -13,3 +13,6 @@ In order to run the example, open the folder authorization_code, and run its `ap
 
     $ cd authorization_code
     $ node app.js
+
+## Important on node version
+We are using [node-serialPort](https://www.npmjs.com/package/serialport) to access the serial port from the Arduino. In order to not have conflicts use node version 6. This is done by using node version manager [nvm](https://github.com/creationix/nvm). If you don't have it install it either on your own or by using a package manager like [brew](https://brew.sh/)
