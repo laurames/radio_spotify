@@ -16,6 +16,41 @@ var client_id = 'f350b06e1ffc46cca3c34fc86c5ec9c7'; // Your client id
 var client_secret = 'f9da10c0119a4145abeb3e5fc06b8265'; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 
+
+var SerialPort = require('serialport');
+
+  var port = new SerialPort('/dev/cu.usbmodem2462301', {
+    baudRate: 57600
+  });
+
+  port.on('open', () => {
+    console.log('Port Opened');
+  });
+
+  var currentPlaylist;
+  var currentVolume;
+  var playlists = 4; //Victoria we need your code for this. This changed with how many playlists we get from spotify.
+
+  port.on('data', (data) => {
+    /* get a buffer of data from the serial port */
+    //console.log(data.toString());
+
+    if((data.toString() > 0) && (data.toString()<1000)){
+      currentPlaylist = data.toString();
+      currentPlaylist = parseInt(((currentPlaylist - 0) / (1000 - 0) * (playlists + 1 - 1) + 1));
+    } else if ((data.toString()>1001) && (data.toString()<2000)) {
+      currentVolume = data.toString();
+      currentVolume = parseInt((currentVolume-1000)/10);
+    } else {
+      console.log('unknown serial O.o')
+    }
+
+    console.log('Playlist: ', currentPlaylist);
+    console.log('Volume: ', currentVolume);
+
+  });
+
+
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
