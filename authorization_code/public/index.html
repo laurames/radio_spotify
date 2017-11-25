@@ -18,6 +18,8 @@
 
   <body>
     <div class="container">
+      <button onclick="getPlaylists()">Try It</button>
+
       <div id="login">
         <h1>This is an example of the Authorization Code flow</h1>
         <a href="/login" class="btn btn-primary">Log in with Spotify</a>
@@ -59,8 +61,41 @@
       </dl>
     </script>
 
+
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="js/main.js"></script>
+
+    <script>
+      function getPlaylists() {
+        console.log("Muhis muhis");
+        $.ajax({
+          url: 'https://api.spotify.com/v1/me/playlists',
+          //url: 'https://api.spotify.com/v1/me/kuznetsova.vv',
+          //https://api.spotify.com/v1/users/kuznetsova.vv/playlists
+          //37i9dQZEVXcE8HrDROGOx6
+          //https://api.spotify.com/v1/users/kuznetsova.vv/playlists/37i9dQZEVXcE8HrDROGOx6
+          type: 'GET',
+          dataType: 'json',
+          success: function (data) {
+            console.log(data);
+          },
+          error: function() { alert('boo!'); },
+          beforeSend: setHeader
+        });
+      }
+
+
+      function setHeader(xhr) {
+       var accessToken = window.location.hash.substr(1);
+       console.log(accessToken);
+
+       var actualToken = accessToken.substr(13);
+       console.log(actualToken);
+
+       xhr.setRequestHeader('Authorization', 'Bearer ' + actualToken);
+     }
+    </script>
   </body>
 </html>
