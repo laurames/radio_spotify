@@ -27,9 +27,22 @@ var SerialPort = require('serialport');
     console.log('Port Opened');
   });
 
+  var currentPlaylist;
+  var currentVolume;
+
   port.on('data', (data) => {
     /* get a buffer of data from the serial port */
-    console.log(data.toString());
+    //console.log(data.toString());
+
+    if((data.toString() > 0) && (data.toString()<1000)){
+      currentPlaylist = data.toString();
+    } else {
+      currentVolume = data.toString();
+    }
+
+    console.log('Playlist: ', currentPlaylist);
+    console.log('Volume: ', currentVolume);
+
   });
 
 
