@@ -71,7 +71,7 @@
       function getPlaylists() {
         console.log("Muhis muhis");
         $.ajax({
-          url: 'https://api.spotify.com/v1/me/playlists',
+          url: 'https://api.spotify.com/v1/users/kuznetsova.vv/playlists',
           //url: 'https://api.spotify.com/v1/me/kuznetsova.vv',
           //https://api.spotify.com/v1/users/kuznetsova.vv/playlists
           //37i9dQZEVXcE8HrDROGOx6
@@ -79,7 +79,16 @@
           type: 'GET',
           dataType: 'json',
           success: function (data) {
-            console.log(data);
+
+            //var obj = JSON.parse(data);
+            console.log("============================================");
+            for (i = 0; i < data.items.length; i++ ) {
+              console.log(data.items[i]);
+              var playlist = data.items[i];
+              console.log("==========================================");
+              console.log("==========================================");
+              console.log(playlist.name);
+            }
           },
           error: function() { alert('boo!'); },
           beforeSend: setHeader
