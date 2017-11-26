@@ -36,7 +36,7 @@ In order to run the example, first add authenticate values.
 We are using [node-serialPort](https://www.npmjs.com/package/serialport) to access the serial port from the Arduino. In order to not have conflicts use node version 6. This is done by using node version manager [nvm](https://github.com/creationix/nvm). If you don't have it install it either on your own or by using a package manager like [brew](https://brew.sh/)
 
 ## Arduino code
-Arduino (a Teensy 3.2 is being used here) code can be found in the hardware_code folder. There's no schematic as there was no time to draw it out, but the LEDpins and the AnalogIn code should make sense to anyone who's worked with hardware. There are two mappings going on so that there's no need to parse the data from node, playlists always stays between 0 - 100 && volume stays between 1001 - 2000. Pin 12 is just a status LED.
+Arduino (a Teensy 3.2 is being used here) code can be found in the hardware_code folder. There's no schematic as there was no time to draw it out, but the LEDpins and the AnalogIn code should make sense to anyone who's worked with hardware. There are two mappings going on so that there's no need to parse the data from node, playlists always stays between 0 - 1000 && volume stays between 1001 - 2000. Pin 12 is just a status LED.
 
 ## 3D model
 Found in 3d_model folder unzip and find a cool readme :) enjoy!
