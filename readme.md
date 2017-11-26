@@ -3,6 +3,9 @@
 # tuneOut
 Listen to your music by leveraging the power of the internet without the noise of the internet.
 
+## Check out our cool video
+[video](https://drive.google.com/file/d/13RXbimj9hoqcYcODRRHXlfVRFJYn7bum/view?usp=sharing)
+
 ## Installation
 Hardware radio that works with the spotify [web api](https://developer.spotify.com/web-api/)
 
