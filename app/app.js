@@ -27,7 +27,7 @@ var client_secret = '97fafd1d3bab46cca49e1a6551626715'; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 
 var headers = {
-  'Authorization': 'Bearer BQClNvUis0-Vqrio2PYl7Y-k1-X_Dxf_yBXmYUotSQ2SFvDlGwi9-5o9Aoto_8nsH_Bo_aR4jVEo0pIYFJn2FIDqrq2CfWfKS14wGDpA1n91C0bXEmda6r55oHtSa7wOK8QtHwJRN0cNtqpSVIhMi2gYN6AEq71MXn9CGoZNjleHeBMqsyo1HP_9pebhEyBfNalngqRUVOv11IVdCIFKiYSaVyPYGYuu-39uaJS_Avxp3JCiIwWUgKQaSUunBQ7jFuZaR15LNlya',
+  'Authorization': 'Bearer BQCMeQo91Uk6bP94v0CZSpqEBrU5J3j3Qxt1W_PC7q5KX4o90Ymw9rSEqa4MOtppRX9A_6EpEwOrPKGIN_oF-bunWG6aFtoHfIzEmW-_27pZF2m7hSIFvx_6mdPOIRf4hfWHsmhOOf_7GDDXTmRkFgLHcyvCo6OamVlPZA1j4xeTUM4zSV1b0pGUuAJnHjx2_KYo-EHvl1a9erhAOesbMFjerRqCPZ5AvAZySJ3nmU4YLiuCOWSnWLqptKReOuAd4YZ0h8KiM8CT',
   "Content-Type" : "application/json"
 }
 
@@ -64,8 +64,8 @@ function callSpotify(error, response, body) {
     if (!error && response.statusCode == 200) {
         // Print out the response body
         //console.log(body)
-        console.log("Here I start");
-        console.log(arrayId);
+        //console.log("Here I start");
+        //console.log(arrayId);
         var response = JSON.parse(body);
         for (i = 0; i < response.items.length; i++ ) {
           // console.log(myArray);
@@ -86,7 +86,7 @@ function callSpotify(error, response, body) {
             }
 
             request(optionsJustOnePlaylist, function(error, response, body) {
-              console.log("sucess");
+              //console.log("success");
               console.log(putBody);
             }).end(putBody);
 
@@ -124,29 +124,29 @@ var SerialPort = require('serialport');
     /* get a buffer of data from the serial port */
     //console.log(data.toString());
 
-    if((data.toString() > 0) && (data.toString()<1000)){
+    if((data.toString() >= 0) && (data.toString()<=1000)){
       currentPlaylist = data.toString();
       currentPlaylist = parseInt(((currentPlaylist - 0) / (1000 - 0) * (playlists + 1 - 1) + 1));
       //getPlaylists(currentPlaylist);
-    } else if ((data.toString()>1001) && (data.toString()<2000)) {
+    } else if ((data.toString()>=1001) && (data.toString()<=2000)) {
       currentVolume = data.toString();
       currentVolume = parseInt((currentVolume-1000)/10);
     } else {
-      console.log('unknown serial O.o')
+      console.log('unknown serial O.o :: ' + data.toString());
     }
 
     // console.log('Playlist: ', currentPlaylist);
     // console.log('Volume: ', currentVolume);
 
     if(lastPlaylist != currentPlaylist){
-    console.log(playlistIDs[currentPlaylist - 1]);
-    console.log("am I running?");
-    //send the request to play the playlistIDs[currentPlaylist-1];
-    //request(playOptions, callSpotifyPlayer);  //------------------------------>THIS NEEDS TO WORK!
+    
+    //console.log(playlistIDs[currentPlaylist - 1]);
+    //console.log("am I running?");
+
     request(optionsPlaylists, callSpotify);
     arrayId = currentPlaylist;
-    someOtherValue = parseInt(Math.random() * 20);
-    console.log('someother: ' + someOtherValue);
+    someOtherValue = parseInt(Math.random() * 30);
+   //console.log('someother: ' + someOtherValue);
     lastPlaylist = currentPlaylist;
     } else {
       //chill :)
@@ -164,13 +164,14 @@ var SerialPort = require('serialport');
     }
 
     request(volumePlay, function(error, response, body) {
-      console.log("sucess");
-      console.log(body);
+      //console.log("success");
+      //console.log(body);
+
     }).end();
 
       lastVolume = currentVolume;
-      console.log("volume changed");
 
+      console.log("Volume changed to: " + currentVolume);
     } else {
       //chill :P
     }
