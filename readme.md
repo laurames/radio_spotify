@@ -1,9 +1,10 @@
 ![alt spotify radio box](splash_names.png)
 
 # tuneOut
-Hardware radio that works with the spotify [web api](https://developer.spotify.com/web-api/)
+Listen to your music by leveraging the power of the internet without the noise of the internet.
 
 ## Installation
+Hardware radio that works with the spotify [web api](https://developer.spotify.com/web-api/)
 
 These examples run on Node.js. On [its website](http://www.nodejs.org/download/) you can find instructions on how to install it. You can also follow [this gist](https://gist.github.com/isaacs/579814) for a quick and easy way to install Node.js and npm.
 
