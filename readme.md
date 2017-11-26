@@ -3,6 +3,10 @@
 # tuneOut
 Listen to your music by leveraging the power of the internet without the noise of the internet.
 
+## 12 hour project built at JUNCTION 2017!!
+Big thanks to: [JUNCTION 2017](https://hackjunction.com/)
+Our project also at: [DEVPOST](https://devpost.com/software/tuneout)
+
 ## Check out our cool video
 [video](https://drive.google.com/file/d/13RXbimj9hoqcYcODRRHXlfVRFJYn7bum/view?usp=sharing)
 
