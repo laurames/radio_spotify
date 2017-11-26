@@ -27,7 +27,7 @@ var client_secret = '97fafd1d3bab46cca49e1a6551626715'; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 
 var headers = {
-  'Authorization': 'Bearer BQAtY5vQWc2UlPuO0XWtOEOWa3kQ_JLyZ5ATqTVuQmiJZwjpkrEI4RGL0ggakLa0_-fbTwbd67YrELrhhFjlpP0JjOw4XF40iZfzDvbETUSbZjzpqzuNh9rGxHEtZvbxdgpOJr0wzJjThV1IXjp5V_7pPlgsLyuEcyRKdj-2U7lywIN_6d5fZOwXEL3obV_r-LjsCcHFT8dNdulf32Q01s05_BGcE5X9ttL09ii4_RrMPYjyUtv1QQqOvMKbYVxvVZT9dzctpD42',
+  'Authorization': 'Bearer BQClNvUis0-Vqrio2PYl7Y-k1-X_Dxf_yBXmYUotSQ2SFvDlGwi9-5o9Aoto_8nsH_Bo_aR4jVEo0pIYFJn2FIDqrq2CfWfKS14wGDpA1n91C0bXEmda6r55oHtSa7wOK8QtHwJRN0cNtqpSVIhMi2gYN6AEq71MXn9CGoZNjleHeBMqsyo1HP_9pebhEyBfNalngqRUVOv11IVdCIFKiYSaVyPYGYuu-39uaJS_Avxp3JCiIwWUgKQaSUunBQ7jFuZaR15LNlya',
   "Content-Type" : "application/json"
 }
 
@@ -44,6 +44,7 @@ var optionsPlaylists = {
     method: 'GET',
     headers: headers
 }
+
 
 var positionBody = JSON.stringify({
   position: 1
@@ -88,6 +89,8 @@ function callSpotify(error, response, body) {
               console.log("sucess");
               console.log(putBody);
             }).end(putBody);
+
+          
           }
         }
     }
@@ -151,6 +154,20 @@ var SerialPort = require('serialport');
 
     if(Math.abs(lastVolume - currentVolume)>5){
       //change the volume of the app to the current volume :)
+
+    // Configure the request
+    var volumePlay = {
+      url: 'https://api.spotify.com/v1/me/player/volume',
+      method: 'PUT',
+      headers: headers,
+      qs: {'device_id	': '77836aa34cdbeded0dda36fa47248f077833fc4b', 'volume_percent' : currentVolume}
+    }
+
+    request(volumePlay, function(error, response, body) {
+      console.log("sucess");
+      console.log(body);
+    }).end();
+
       lastVolume = currentVolume;
       console.log("volume changed");
 
