@@ -22,18 +22,25 @@ var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
-var client_id = 'f350b06e1ffc46cca3c34fc86c5ec9c7'; // Your client id
-var client_secret = 'f9da10c0119a4145abeb3e5fc06b8265'; // Your secret
+var client_id = '77bf21dac1cf45aebb8f17885de01bbe'; // Your client id
+var client_secret = '97fafd1d3bab46cca49e1a6551626715'; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 
 var headers = {
-  'Authorization': 'Bearer BQD4i6nAWx4b-kTEx_Jl7LlHPpjOLW54BUfLrxmNb1wwHp93oZ2hTbTefSng_5VVu9K9ZCWE3UR4tLqtG1x0RfExnyOR1NC74xfEQ9Zuztn20HzNSzULXGDKKWW8X66aXJALOczX9Irc0D-_tyii27OiiALt_7TiU5Ch0LRc_dqsrEcgFmdgX3qnuSpKfWl2lPui1A3g_XdlY55bP1TPw1nA3sxFVv26XaJyfGQGQbMg6ljNEtufamYXW1e-grbdrGilC9Gl4CnYXVA',
+  'Authorization': 'Bearer BQAtY5vQWc2UlPuO0XWtOEOWa3kQ_JLyZ5ATqTVuQmiJZwjpkrEI4RGL0ggakLa0_-fbTwbd67YrELrhhFjlpP0JjOw4XF40iZfzDvbETUSbZjzpqzuNh9rGxHEtZvbxdgpOJr0wzJjThV1IXjp5V_7pPlgsLyuEcyRKdj-2U7lywIN_6d5fZOwXEL3obV_r-LjsCcHFT8dNdulf32Q01s05_BGcE5X9ttL09ii4_RrMPYjyUtv1QQqOvMKbYVxvVZT9dzctpD42',
   "Content-Type" : "application/json"
 }
 
+var playlistIDs = [];
+
+var currentPlaylist = 1;
+var lastPlaylist = 0;
+var currentVolume = 100;
+var lastVolume = 100;
+
 // Configure the request
 var optionsPlaylists = {
-    url: 'https://api.spotify.com/v1/users/kuznetsova.vv/playlists',
+    url: 'https://api.spotify.com/v1/users/12147083538/playlists',
     method: 'GET',
     headers: headers
 }
@@ -45,9 +52,12 @@ var positionBody = JSON.stringify({
 var myArray = {
   "1": "Release Radar",
   "2": "Discover Weekly",
+  "3": "Today's Top Hits",
+  "4": "New Music Friday",
 };
 
 var arrayId = 2;
+var someOtherValue = 10;
 
 function callSpotify(error, response, body) {
     if (!error && response.statusCode == 200) {
@@ -62,7 +72,7 @@ function callSpotify(error, response, body) {
             var playlist = response.items[i];
 
             var obj = { "context_uri":"spotify:user:spotify:playlist:" + playlist.id,
-            "offset": {"position": 5}};
+            "offset": {"position": someOtherValue}};
             var putBody = JSON.stringify(obj);
 
             console.log(playlist.name);
@@ -71,7 +81,7 @@ function callSpotify(error, response, body) {
                 url: 'https://api.spotify.com/v1/me/player/play',
                 method: 'PUT',
                 headers: headers,
-                qs: {'device_id	': '219af98b3ee567d489a64b5b0c66bd9dce51fc0e'}
+                qs: {'device_id	': '77836aa34cdbeded0dda36fa47248f077833fc4b'}
             }
 
             request(optionsJustOnePlaylist, function(error, response, body) {
@@ -83,7 +93,10 @@ function callSpotify(error, response, body) {
     }
 }
 // Start the request
-request(optionsPlaylists, callSpotify);
+//request(optionsPlaylists, callSpotify);
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
 
 var SerialPort = require('serialport');
@@ -94,11 +107,15 @@ var SerialPort = require('serialport');
 
   port.on('open', () => {
     console.log('Port Opened');
+    //request(options, callSpotify);
   });
 
-  var currentPlaylist;
-  var currentVolume;
-  var playlists = 4; //Victoria we need your code for this. This changed with how many playlists we get from spotify.
+
+  var playlists = 4;
+
+/////
+
+  // require('./car.js').getPlaylists('hello');
 
   port.on('data', (data) => {
     /* get a buffer of data from the serial port */
@@ -107,7 +124,7 @@ var SerialPort = require('serialport');
     if((data.toString() > 0) && (data.toString()<1000)){
       currentPlaylist = data.toString();
       currentPlaylist = parseInt(((currentPlaylist - 0) / (1000 - 0) * (playlists + 1 - 1) + 1));
-      getPlaylists(currentPlaylist);
+      //getPlaylists(currentPlaylist);
     } else if ((data.toString()>1001) && (data.toString()<2000)) {
       currentVolume = data.toString();
       currentVolume = parseInt((currentVolume-1000)/10);
@@ -115,8 +132,31 @@ var SerialPort = require('serialport');
       console.log('unknown serial O.o')
     }
 
-    console.log('Playlist: ', currentPlaylist);
-    console.log('Volume: ', currentVolume);
+    // console.log('Playlist: ', currentPlaylist);
+    // console.log('Volume: ', currentVolume);
+
+    if(lastPlaylist != currentPlaylist){
+    console.log(playlistIDs[currentPlaylist - 1]);
+    console.log("am I running?");
+    //send the request to play the playlistIDs[currentPlaylist-1];
+    //request(playOptions, callSpotifyPlayer);  //------------------------------>THIS NEEDS TO WORK!
+    request(optionsPlaylists, callSpotify);
+    arrayId = currentPlaylist;
+    someOtherValue = parseInt(Math.random() * 20);
+    console.log('someother: ' + someOtherValue);
+    lastPlaylist = currentPlaylist;
+    } else {
+      //chill :)
+    }
+
+    if(Math.abs(lastVolume - currentVolume)>5){
+      //change the volume of the app to the current volume :)
+      lastVolume = currentVolume;
+      console.log("volume changed");
+
+    } else {
+      //chill :P
+    }
 
   });
 
