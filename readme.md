@@ -1,4 +1,4 @@
-![alt spotify radio box](https://github.com/laurames/radio_spotify/splash_names.png)
+![alt spotify radio box](splash_names.png)
 
 # tuneOut
 Hardware radio that works with the spotify [web api](https://developer.spotify.com/web-api/)
