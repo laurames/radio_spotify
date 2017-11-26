@@ -9,10 +9,23 @@ Once installed, clone the repository and install its dependencies running:
     $ npm install
 
 ## Running the examples
-In order to run the example, open the folder authorization_code, and run its `app.js` file. For instance, to run the Authorization Code example do:
+In order to run the example, first add authenticate values.
 
-    $ cd authorization_code
+- In https://beta.developer.spotify.com/dashboard/login register your app and paste the client_id, client_secret and redirect_uri values in app.js on line 25-27.
+- open a spotify [web console](https://developer.spotify.com/web-api/console/get-current-user) and  press Get OAuth Token. In pop up window check all permissions in relevant and optional scopes and press Request token. Copy the generated token value and in app.js on line 30 replace YOUR_TOKEN with it. In the **response section** copy the id value (example "id" : "*************") and on line 43 replace YOUR_USER_ID
+- open Spotify web console https://developer.spotify.com/web-api/console/get-users-available-devices/#complete and fetch the list of available devices. Select one that {"is_active" : true}, and copy the id. Paste the value to app.js on line 85, 163 instead of if YOUR_DEVICE_ID.
+- Please follow the playlists that are listed in the array on lines 54-58.
+
+- open the folder app, and run its `app.js` file in node. For instance do:
+
+    $ cd app
     $ node app.js
 
 ## Important on node version
 We are using [node-serialPort](https://www.npmjs.com/package/serialport) to access the serial port from the Arduino. In order to not have conflicts use node version 6. This is done by using node version manager [nvm](https://github.com/creationix/nvm). If you don't have it install it either on your own or by using a package manager like [brew](https://brew.sh/)
+
+## Arduino code
+Located in the hardware folder and the specks for building are:
+
+## 3D model
+Found in 3d_model folder. Specks for it are:

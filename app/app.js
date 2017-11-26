@@ -22,12 +22,12 @@ var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
-var client_id = '77bf21dac1cf45aebb8f17885de01bbe'; // Your client id
-var client_secret = '97fafd1d3bab46cca49e1a6551626715'; // Your secret
-var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
+var client_id = 'CLIENT_ID'; // Your client id
+var client_secret = 'CLIENT_SECRET'; // Your secret
+var redirect_uri = 'REDIRECT_URI'; // Your redirect uri
 
 var headers = {
-  'Authorization': 'Bearer BQCMeQo91Uk6bP94v0CZSpqEBrU5J3j3Qxt1W_PC7q5KX4o90Ymw9rSEqa4MOtppRX9A_6EpEwOrPKGIN_oF-bunWG6aFtoHfIzEmW-_27pZF2m7hSIFvx_6mdPOIRf4hfWHsmhOOf_7GDDXTmRkFgLHcyvCo6OamVlPZA1j4xeTUM4zSV1b0pGUuAJnHjx2_KYo-EHvl1a9erhAOesbMFjerRqCPZ5AvAZySJ3nmU4YLiuCOWSnWLqptKReOuAd4YZ0h8KiM8CT',
+  'Authorization': 'Bearer YOUR_TOKEN',
   "Content-Type" : "application/json"
 }
 
@@ -40,7 +40,7 @@ var lastVolume = 100;
 
 // Configure the request
 var optionsPlaylists = {
-    url: 'https://api.spotify.com/v1/users/12147083538/playlists',
+    url: 'https://api.spotify.com/v1/users/YOUR_USER_ID/playlists',
     method: 'GET',
     headers: headers
 }
@@ -50,6 +50,7 @@ var positionBody = JSON.stringify({
   position: 1
 });
 
+//Please before running the app follow these playlists on your spotify accout:
 var myArray = {
   "1": "Release Radar",
   "2": "Discover Weekly",
@@ -82,7 +83,7 @@ function callSpotify(error, response, body) {
                 url: 'https://api.spotify.com/v1/me/player/play',
                 method: 'PUT',
                 headers: headers,
-                qs: {'device_id	': '77836aa34cdbeded0dda36fa47248f077833fc4b'}
+                qs: {'device_id	': 'YOUR_DEVICE_ID'}
             }
 
             request(optionsJustOnePlaylist, function(error, response, body) {
@@ -90,7 +91,7 @@ function callSpotify(error, response, body) {
               console.log(putBody);
             }).end(putBody);
 
-          
+
           }
         }
     }
@@ -103,7 +104,7 @@ function callSpotify(error, response, body) {
 
 
 var SerialPort = require('serialport');
-
+  //The SeiralPort('YOUR_OWN_SERIALPORT_WHERE_HARDWARE_IS_CONNECTED')
   var port = new SerialPort('/dev/cu.usbmodem2462301', {
     baudRate: 57600
   });
@@ -139,7 +140,7 @@ var SerialPort = require('serialport');
     // console.log('Volume: ', currentVolume);
 
     if(lastPlaylist != currentPlaylist){
-    
+
     //console.log(playlistIDs[currentPlaylist - 1]);
     //console.log("am I running?");
 
@@ -160,7 +161,7 @@ var SerialPort = require('serialport');
       url: 'https://api.spotify.com/v1/me/player/volume',
       method: 'PUT',
       headers: headers,
-      qs: {'device_id	': '77836aa34cdbeded0dda36fa47248f077833fc4b', 'volume_percent' : currentVolume}
+      qs: {'device_id	': 'YOUR_DEVICE_ID', 'volume_percent' : currentVolume}
     }
 
     request(volumePlay, function(error, response, body) {
