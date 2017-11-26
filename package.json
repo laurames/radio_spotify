@@ -1,7 +1,7 @@
 {
-  "author": "Spotify",
-  "name": "web-api-auth-examples",
-  "description": "Basic examples of the Spotify authorization flows through OAuth 2",
+  "author": "L2MSV",
+  "name": "tuneOut",
+  "description": "Node app w/ HW controller for Spotify - built for Junction 2017",
   "version": "0.0.1",
   "dependencies": {
     "cookie-parser": "1.3.2",
