@@ -31,12 +31,11 @@ var headers = {
   "Content-Type" : "application/json"
 }
 
-var playlistIDs = [];
-
+//These hold the values that really do all the work. Instantiating, but will be overwritten.
 var currentPlaylist = 1;
 var lastPlaylist = 0;
 var currentVolume = 100;
-var lastVolume = 100;
+var lastVolume = 0;
 
 // Configure the request
 var optionsPlaylists = {
@@ -57,15 +56,15 @@ var myArray = {
   "4": "New Music Friday",
 };
 
-var arrayId = 2;
-var someOtherValue = 10;
+var arrayId = 2; // < ------------------------------------------ Temp value right now, will be overwritten.
+var someOtherValue = 10; // < ---------------------------------- Temp value right now, will be overwritten.
 
 function callSpotify(error, response, body) {
     if (!error && response.statusCode == 200) {
         // Print out the response body
         //console.log(body)
-        //console.log("Here I start");
-        //console.log(arrayId);
+        //console.log("Call Spotify called");
+        //console.log("Array number being called: " + arrayId);
         var response = JSON.parse(body);
         for (i = 0; i < response.items.length; i++ ) {
           // console.log(myArray);
@@ -86,7 +85,7 @@ function callSpotify(error, response, body) {
             }
 
             request(optionsJustOnePlaylist, function(error, response, body) {
-              //console.log("success");
+              //console.log("Success: Playlist function called);
               console.log(putBody);
             }).end(putBody);
 
@@ -96,9 +95,10 @@ function callSpotify(error, response, body) {
     }
 }
 // Start the request
-//request(optionsPlaylists, callSpotify);
+//request(optionsPlaylists, callSpotify); //<----------------------------- You can do some basic configuration stuff before interacting w/ the HW, note to self: look into this for global shuffle controls etc?
 
 //-------------------------------------------------------------------------
+//ALL THE SERIAL COMMUNICATION ++ CALLS TO SPOTIFY HAPPEN HERE
 //-------------------------------------------------------------------------
 
 
@@ -110,15 +110,9 @@ var SerialPort = require('serialport');
 
   port.on('open', () => {
     console.log('Port Opened');
-    //request(options, callSpotify);
   });
 
-
   var playlists = 4;
-
-/////
-
-  // require('./car.js').getPlaylists('hello');
 
   port.on('data', (data) => {
     /* get a buffer of data from the serial port */
@@ -138,22 +132,26 @@ var SerialPort = require('serialport');
     // console.log('Playlist: ', currentPlaylist);
     // console.log('Volume: ', currentVolume);
 
+    //Playlist stuff below.
+
     if(lastPlaylist != currentPlaylist){
-    
-    //console.log(playlistIDs[currentPlaylist - 1]);
-    //console.log("am I running?");
+    //console.log("Playlist change to be called now");
 
     request(optionsPlaylists, callSpotify);
     arrayId = currentPlaylist;
     someOtherValue = parseInt(Math.random() * 30);
-   //console.log('someother: ' + someOtherValue);
+   //console.log('Track to be called from the playlist: ' + someOtherValue);
     lastPlaylist = currentPlaylist;
     } else {
-      // chill :)
+      //...
+      // chill, do nothing.
+      //...
     }
 
-    if(Math.abs(lastVolume - currentVolume)>5){
-      //change the volume of the app to the current volume :)
+    //Volume stuff below.
+
+    if(Math.abs(lastVolume - currentVolume)>5){ // <---------------- Crappy debounce, hackathon style ;)
+    //change the volume of the app to the current volume :)
 
     // Configure the request
     var volumePlay = {
@@ -164,7 +162,7 @@ var SerialPort = require('serialport');
     }
 
     request(volumePlay, function(error, response, body) {
-      //console.log("success");
+      //console.log("success - called volumePlay");
       //console.log(body);
 
     }).end();
@@ -173,7 +171,9 @@ var SerialPort = require('serialport');
 
       console.log("Volume changed to: " + currentVolume);
     } else {
-      //chill :P
+      //...
+      //chill, nothing to do.
+      //...
     }
 
   });
@@ -193,3 +193,5 @@ var generateRandomString = function(length) {
   }
   return text;
 };
+
+//----------------------------------------------------------------------------------------------------
